@@ -23,7 +23,9 @@ const App2 = () => {
 
   return (
     <>
-      <TopPage />
+      <div style={{ width: '100%', height: '100vh' }}>
+        <TopPage />
+      </div>
     </>
   );
 };
