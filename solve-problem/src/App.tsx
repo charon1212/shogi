@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ConfigurationContextProvider, useConfigurationContext } from './context/ConfigurationContext';
-import { TopPage } from './pages/TopPage';
+import { TopPage } from './pages/TopPage/TopPage';
 
 export const App = () => {
   return (
