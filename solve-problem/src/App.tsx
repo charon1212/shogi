@@ -1,7 +1,29 @@
+import { useEffect } from 'react';
+import { ConfigurationContextProvider, useConfigurationContext } from './context/ConfigurationContext';
+import { TopPage } from './pages/TopPage';
+
 export const App = () => {
   return (
     <>
-      <h1>app</h1>
+      <ConfigurationContextProvider>
+        <App2 />
+      </ConfigurationContextProvider>
+    </>
+  );
+};
+
+const App2 = () => {
+  const [_, setConfig] = useConfigurationContext();
+  useEffect(() => {
+    window.myAPI.configLoad().then((config) => {
+      console.log({ config });
+      setConfig(config);
+    });
+  }, []);
+
+  return (
+    <>
+      <TopPage />
     </>
   );
 };
