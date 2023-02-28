@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import * as url from "url";
+import { subscribeIpcMainHandler } from "./subscribeIpcMainHandler";
 
 // Electronアプリの起動処理。
 // Windowを作成して、appUrlで指定するコンテンツを表示する。
@@ -35,3 +36,5 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
+
+subscribeIpcMainHandler();
