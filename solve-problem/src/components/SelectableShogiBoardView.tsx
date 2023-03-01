@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ShogiBoard, ShogiKoma } from '../domain/shogi';
 import { ShogiMasu } from '../domain/shogiZahyo';
 import { ShogiBoardView } from './ShogiBoardView';
@@ -36,6 +36,10 @@ export const SelectableShogiBoardView = (props: Props) => {
     setSelectMochigoma(mochigoma);
     setSelectMasu(undefined);
   };
+
+  useEffect(() => {
+    clearSelection();
+  }, [board]);
 
   return (
     <ShogiBoardView
