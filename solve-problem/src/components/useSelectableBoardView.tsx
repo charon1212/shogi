@@ -21,7 +21,7 @@ export const useSelectableBoardView = ({
   const ui = (
     <ShogiBoardView
       board={board}
-      colorize={selectMasu ? [{ masu: selectMasu, color: selectColor }] : []}
+      colorBoard={selectMasu ? [{ masu: selectMasu, color: selectColor }] : []}
       colorMochigoma={selectMochigoma ? [{ koma: selectMochigoma, sente: board.sente, color: selectColor }] : []}
       onClickBoard={(masu) => {
         const cell = board.board[masu.s - 1][masu.d - 1];

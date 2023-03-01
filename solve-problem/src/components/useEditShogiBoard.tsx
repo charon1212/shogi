@@ -9,7 +9,7 @@ const color = 'yellow';
 const init = createInitBoard();
 const arr9 = [...Array(9)];
 
-export const useEditShogiBoard = ({}: {}) => {
+export const useEditShogiBoard = () => {
   /** 手番 */
   const [sente, setSente] = useState(true);
 
@@ -98,7 +98,7 @@ export const useEditShogiBoard = ({}: {}) => {
         <ShogiBoardView
           board={shogiBoard}
           allowMochigomaKing
-          colorize={selectMasu ? [{ masu: selectMasu, color }] : []}
+          colorBoard={selectMasu ? [{ masu: selectMasu, color }] : []}
           colorMochigoma={selectMochigoma ? [{ ...selectMochigoma, color }] : []}
           onClickBoard={(masu) => {
             if (selectMasu) {
