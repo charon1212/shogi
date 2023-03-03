@@ -25,6 +25,7 @@ export const adaptShogiMove = (shogiBoard: ShogiBoard, move: ShogiMove, copy?: b
     }
     board2.board[after.s - 1][after.d - 1] = board2.board[before.s - 1][before.d - 1]; // 移動先の入れ替え。
     board2.board[before.s - 1][before.d - 1] = null; // 移動元の削除
+    if (nari) board2.board[after.s - 1][after.d - 1]!.nari = true;
   }
   board2.sente = !sente;
   return board2;
