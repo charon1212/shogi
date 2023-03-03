@@ -27,7 +27,8 @@ export const MoveInputShogiBoardView = (props: Props) => {
           if (movableNarazu.movable && movableNari.movable) onInputMove?.(window.confirm('成りますか？') ? moveNari : moveNarazu);
           if (movableNarazu.movable && !movableNari.movable) onInputMove?.(moveNarazu);
           if (!movableNarazu.movable && movableNari.movable) onInputMove?.(moveNari);
-          if (!movableNarazu.movable && !movableNari.movable) clearSelection();
+          if (!movableNarazu.movable && !movableNari.movable) alert(`エラー：${movableNarazu.msg}`);
+          clearSelection();
         } else if (selectMochigoma && selectMochigoma.sente === board.sente) {
           const move: ShogiMove = { before: { d: 0, s: 0 }, after: clickMasu, sente: board.sente, nari: false, uchi: selectMochigoma.koma };
           if (judgeMovable(board, move).movable) onInputMove?.(move);
