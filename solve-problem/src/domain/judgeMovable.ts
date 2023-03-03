@@ -99,15 +99,15 @@ const existAigoma = (shogiBoard: ShogiBoard, before: ShogiMasu, after: ShogiMasu
   if (dd === 0 && ds === 0) return false;
   const betweenD = between(before.d, after.d);
   const betweenS = between(before.s, after.s);
-  let current = before;
+  let current = { ...before };
   current.d += dd;
   current.s += ds
   while (betweenD(current.d) && betweenS(current.s)) {
     current.d += dd;
     current.s += ds;
-    if (shogiBoard.board[current.s - 1][current.d - 1]) return false;
+    if (shogiBoard.board[current.s - 1][current.d - 1]) return true;
   }
-  return true;
+  return false;
 };
 
 /** - - - - 駒の移動に関する判定 - - - - */
