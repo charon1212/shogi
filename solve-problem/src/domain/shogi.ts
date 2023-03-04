@@ -12,6 +12,7 @@ export type ShogiMove = {
   nari: boolean,
   uchi?: ShogiKoma,
   sente: boolean,
+  text: string,
 };
 export type KifuMove = { move: ShogiMove, comment: string, next: KifuMove[], };
 export type Kifu = {
