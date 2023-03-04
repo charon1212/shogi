@@ -7,8 +7,8 @@ export const createShogiMove = (args: CreateShogiMoveArgs): ShogiMove => {
     const { board, after, uchi } = args;
     return { before: { d: 0, s: 0 }, after, uchi, sente: board.sente, nari: false, text: '' };
   } else {
-    const { board, before, after } = args;
-    return { before, after, sente: board.sente, nari: false, text: '' };
+    const { board, before, after, nari } = args;
+    return { before, after, sente: board.sente, nari, text: '' };
   }
 };
 
@@ -19,5 +19,5 @@ const getMasuText = (masu: ShogiMasu) => `${masuTextS[masu.s]}${masuTextD[masu.d
 export const setShogiMoveText = (board: ShogiBoard, shogiMove: ShogiMove) => {
   const { before, after, nari, uchi } = shogiMove;
   const koma = uchi ?? board.board[before.s - 1][before.d - 1]!.koma;
-  shogiMove.text = `${board.sente ? '▲' : '△'}${getMasuText(after)}${getKomaName(koma, false)}${nari ? '成' : ''}${uchi ? '打' : `${getMasuText(before)}`}`;
+  shogiMove.text = `${board.sente ? '▲' : '△'}${getMasuText(after)}${getKomaName(koma, false)}${nari ? '成' : ''}${uchi ? '打' : `(${getMasuText(before)})`}`;
 };
