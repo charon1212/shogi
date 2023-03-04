@@ -1,3 +1,4 @@
+import { logger } from "../util/logger";
 import { ShogiBoard, ShogiKoma, ShogiMove } from "./shogi";
 import { ShogiMasu } from "./shogiZahyo";
 
@@ -103,9 +104,12 @@ const existAigoma = (shogiBoard: ShogiBoard, before: ShogiMasu, after: ShogiMasu
   current.d += dd;
   current.s += ds
   while (betweenD(current.d) && betweenS(current.s)) {
+    if (shogiBoard.board[current.s - 1][current.d - 1]) {
+      logger.debug(`[合駒判定]あり：${JSON.stringify({ current, target: shogiBoard.board[current.s - 1][current.d - 1] })}`);
+      return true;
+    }
     current.d += dd;
     current.s += ds;
-    if (shogiBoard.board[current.s - 1][current.d - 1]) return true;
   }
   return false;
 };
