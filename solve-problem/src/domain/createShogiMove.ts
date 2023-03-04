@@ -19,5 +19,5 @@ const getMasuText = (masu: ShogiMasu) => `${masuTextS[masu.s]}${masuTextD[masu.d
 export const setShogiMoveText = (board: ShogiBoard, shogiMove: ShogiMove) => {
   const { before, after, nari, uchi } = shogiMove;
   const koma = uchi ?? board.board[before.s - 1][before.d - 1]!.koma;
-  shogiMove.text = `${getMasuText(after)}${getKomaName(koma, false)}${nari ? '成' : ''}${uchi ? '打' : `${getMasuText(before)}`}`;
+  shogiMove.text = `${board.sente ? '▲' : '△'}${getMasuText(after)}${getKomaName(koma, false)}${nari ? '成' : ''}${uchi ? '打' : `${getMasuText(before)}`}`;
 };
