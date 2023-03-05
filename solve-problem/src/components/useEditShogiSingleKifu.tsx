@@ -5,11 +5,9 @@ import { MoveInputShogiBoardView } from './MoveInputShogiBoardView';
 import { useMoveListView } from './useMoveListView';
 
 type UseEditShogiSingleKifuArgs = {
-  initShogiBoard: ShogiBoard;
+  startBoard: ShogiBoard;
 };
-export const useEditShogiSingleKifu = ({ initShogiBoard }: UseEditShogiSingleKifuArgs) => {
-  const [startBoard, setStartBoard] = useState<ShogiBoard>(initShogiBoard);
-
+export const useEditShogiSingleKifu = ({ startBoard }: UseEditShogiSingleKifuArgs) => {
   // const [moveCount, setMoveCount] = useState(0); // 0は開始局面
   const [moves, setMoves] = useState<ShogiMove[]>([]);
   const [uiMoveListView, moveCount, setMoveCount] = useMoveListView({ moveList: moves });
@@ -34,5 +32,5 @@ export const useEditShogiSingleKifu = ({ initShogiBoard }: UseEditShogiSingleKif
     </div>
   );
 
-  return { uiEditShogiSingleKifu, startBoard, setStartBoard, moves, setMoves, moveCount, board };
+  return { uiEditShogiSingleKifu, moves, setMoves, moveCount, board };
 };
