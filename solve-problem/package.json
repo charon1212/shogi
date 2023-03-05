@@ -14,7 +14,7 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
-    "@charon1212/my-lib-react": "^1.10.0",
+    "@charon1212/my-lib-react": "^1.11.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
