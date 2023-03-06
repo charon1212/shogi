@@ -8,7 +8,6 @@ type UseEditShogiSingleKifuArgs = {
   startBoard: ShogiBoard;
 };
 export const useEditShogiSingleKifu = ({ startBoard }: UseEditShogiSingleKifuArgs) => {
-  // const [moveCount, setMoveCount] = useState(0); // 0は開始局面
   const [moves, setMoves] = useState<ShogiMove[]>([]);
   const [uiMoveListView, moveCount, setMoveCount] = useMoveListView({ moveList: moves });
   const board = moves.filter((_, i) => i < moveCount).reduce((prevBoard, move) => adaptShogiMove(prevBoard, move, true), startBoard);
