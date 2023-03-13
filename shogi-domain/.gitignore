@@ -1,0 +1,4 @@
+/node_modules
+/build
+*.memo
+package-lock.json
