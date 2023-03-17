@@ -21,3 +21,8 @@ export const convertMasuSDToIJ = ({ d, s }: ShogiMasuSD): ShogiMasuIJ => ({ i: d
  * @returns SD座標のマス
  */
 export const convertMasuIJToSD = ({ i, j }: ShogiMasuIJ): ShogiMasuSD => ({ s: 9 - j, d: i + 1 });
+
+const masuTextD: { [key in number]: string } = { 1: '一', 2: '二', 3: '三', 4: '四', 5: '五', 6: '六', 7: '七', 8: '八', 9: '九', };
+const masuTextS: { [key in number]: string } = { 1: '１', 2: '２', 3: '３', 4: '４', 5: '５', 6: '６', 7: '７', 8: '８', 9: '９', };
+/** マスのテキスト表現を取得する。「７六」等。 */
+export const getMasuText = (masu: ShogiMasuSD) => `${masuTextS[masu.s]}${masuTextD[masu.d]}`;
