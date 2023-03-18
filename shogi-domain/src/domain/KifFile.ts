@@ -86,7 +86,7 @@ const parseSasite = (source: string): ParseSasiteResult | undefined => {
   if (source.startsWith('▲') || source.startsWith('△')) source = source.substring(1); // 手番を削除。
 
   // <移動先座標>
-  const { value: after } = IF(source.startsWith('同'), {
+  const { value: after } = IF(source.startsWith('同') && source[1] !== '　', {
     t: () => { source = source.substring(1); return '同' as const; },
     f: () => {
       const text = source.substring(0, 2);
