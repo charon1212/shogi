@@ -1,7 +1,7 @@
 import { ShogiKifu, ShogiKifuMove } from "./ShogiKifu";
 import { MyTree, MyNode, formatInput, IF } from 'util-charon1212';
-import { getMasuFromText, ShogiMasuSD } from "./ShogiMasu";
-import { ShogiKoma } from "./ShogiKoma";
+import { getMasuFromText, getMasuText, ShogiMasuSD } from "./ShogiMasu";
+import { getKomaName1Char, ShogiKoma } from "./ShogiKoma";
 import { ShogiMove } from "./ShogiMove";
 
 const splitByNewLine = (str: string) => str.split('\r\n').map((v) => v.split('\n')).reduce((p, c) => [...p, ...c], []);
@@ -133,5 +133,52 @@ const parseSasite = (source: string): ParseSasiteResult | undefined => {
 const KifKomaNameMap1: { [key in string]: { koma: ShogiKoma, nari: boolean } } = { '玉': { koma: 'k', nari: false, }, '飛': { koma: 'r', nari: false, }, '龍': { koma: 'r', nari: true, }, '竜': { koma: 'r', nari: true, }, '角': { koma: 'b', nari: false, }, '馬': { koma: 'b', nari: true, }, '金': { koma: 'g', nari: false, }, '銀': { koma: 's', nari: false, }, '全': { koma: 's', nari: true, }, '桂': { koma: 'n', nari: false, }, '圭': { koma: 'n', nari: true, }, '香': { koma: 'l', nari: false, }, '杏': { koma: 'l', nari: true, }, '歩': { koma: 'p', nari: false, }, 'と': { koma: 'p', nari: true, }, };
 const KifKomaNameMap2: { [key in string]: { koma: ShogiKoma, nari: boolean } } = { '成銀': { koma: 's', nari: true }, '成桂': { koma: 'n', nari: true }, '成香': { koma: 'l', nari: true }, };
 
+export const writeKifFile = (shogiKifu: ShogiKifu): string => {
+  const lines: string[] = [];
+  lines.push('#KIF version=2.0 encoding=UTF8');
+  lines.push('# created by @charon1212/shogi-domain');
+  lines.push('# see: https://github.com/charon1212/shogi');
+  lines.push('手合割：平手　　');
+  lines.push('手数----指手---------消費時間--');
+  lines.push(...addComment(shogiKifu.firstComment));
+  for (let i = 0; i < shogiKifu.kifu.length; i++) {
+    if (i > 0) {
+      lines.push('');
+      lines.push('');
+      lines.push(`変化：${1}手`);
+    }
+    lines.push(...writeNodeRec(1, shogiKifu.kifu[i].root!));
+  }
 
-// export const writeKifFile = (kif: ShogiKifu): string => { };
+  return lines.join('\n');
+};
+
+const addComment = (comment: string): string[] => {
+  const list = splitByNewLine(comment);
+  if (list[list.length - 1] === '') list.pop(); // 最終行が空白の場合、1行だけ削除。
+  return list.map((v) => `*${v}`);
+};
+
+const writeNodeRec = (no: number, node: MyNode<ShogiKifuMove>): string[] => {
+  const arr: string[] = [];
+  arr.push(`${no.toString().padStart(4, ' ')} ${createSasite(node.value.move, node.parent?.value.move)}`);
+  arr.push(...addComment(node.value.comment));
+  for (let i = 0; i < node.children.length; i++) {
+    if (i > 0) {
+      arr.push('');
+      arr.push('');
+      arr.push(`変化：${no + 1}手`);
+    }
+    arr.push(...writeNodeRec(no + 1, node.children[i]));
+  }
+  return arr;
+};
+
+const createSasite = (move: ShogiMove, parentMove?: ShogiMove): string => {
+  const komaName = move.uchi ? getKomaName1Char(move.koma, false) : getKomaName1Char(move.koma, move.narikoma);
+  if (move.after.s === parentMove?.after.s && move.after.d === parentMove?.after.d && !move.uchi) {
+    return `同　${komaName}${move.nari ? '成' : ''}(${move.before.s}${move.before.d})`;
+  } else {
+    return `${getMasuText(move.after)}${komaName}${move.uchi ? '打' : `(${move.before.s}${move.before.d})`}`;
+  }
+};
