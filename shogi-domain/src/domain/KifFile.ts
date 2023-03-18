@@ -40,8 +40,11 @@ export const readKifFile = (content: string): { shogiKifu: ShogiKifu, headers: {
       headers.push({ key: line.substring(0, index), value: line.substring(index + 1) });
       continue;
     }
+    // これ以降、差し手の表現を判定する。
     const spaceItems = line.split(' ').filter((v) => v); // 空白で区切り、0文字を除去。
+    if (spaceItems.length < 2) continue;
     const moveCount = +spaceItems[0];
+    if (isNaN(moveCount)) continue;
     const sente = moveCount % 2 === 1; // TODO: 平手スタート前提の手番決定。奇数番手（1,3,5）は先手とし、偶数番手（2,4,6）は後手とする。
     const sasite = parseSasite(spaceItems[1]);
     if (sasite) {
