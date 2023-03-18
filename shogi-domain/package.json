@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/charon1212/shogi/issues"
   },
-  "homepage": "https://github.com/charon1212/shogi#readme"
+  "homepage": "https://github.com/charon1212/shogi#readme",
+  "dependencies": {
+    "util-charon1212": "^1.19.1"
+  }
 }

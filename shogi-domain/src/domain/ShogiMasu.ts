@@ -26,3 +26,15 @@ const masuTextD: { [key in number]: string } = { 1: '一', 2: '二', 3: '三', 4
 const masuTextS: { [key in number]: string } = { 1: '１', 2: '２', 3: '３', 4: '４', 5: '５', 6: '６', 7: '７', 8: '８', 9: '９', };
 /** マスのテキスト表現を取得する。「７六」等。 */
 export const getMasuText = (masu: ShogiMasuSD) => `${masuTextS[masu.s]}${masuTextD[masu.d]}`;
+/** マスのテキスト表現から、マスのオブジェクトを取得する。 */
+export const getMasuFromText = (text: string): ShogiMasuSD | undefined => {
+  if (text.length !== 2) return undefined;
+  const findKey = (obj: { [key in any]: string }, value: string) => {
+    for (let i in obj) if (obj[i] === value) return i;
+    return undefined;
+  };
+  const s = +(findKey(masuTextS, text[0]) || 0);
+  const d = +(findKey(masuTextD, text[1]) || 0);
+  if (s < 1 || s > 9 || d < 1 || d > 9) return undefined;
+  return { s, d };
+};
