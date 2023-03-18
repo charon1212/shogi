@@ -4,8 +4,10 @@ import { getMasuFromText, ShogiMasuSD } from "./ShogiMasu";
 import { ShogiKoma } from "./ShogiKoma";
 import { ShogiMove } from "./ShogiMove";
 
+const splitByNewLine = (str: string) => str.split('\r\n').map((v) => v.split('\n')).reduce((p, c) => [...p, ...c], []);
+
 export const readKifFile = (content: string): { shogiKifu: ShogiKifu, headers: { key: string, value: string }[] } => {
-  const lines = content.split('\r\n').map((v) => v.split('\n')).reduce((p, c) => [...p, ...c], []);
+  const lines = splitByNewLine(content);
   const headers: { key: string, value: string }[] = [];
   const shogiKifu: ShogiKifu = { firstComment: '', kifu: [], };
   let currentNode: MyNode<ShogiKifuMove> | undefined;
@@ -52,7 +54,7 @@ export const readKifFile = (content: string): { shogiKifu: ShogiKifu, headers: {
       if (!after) throw new Error(`無効な差し手。初期局面で同xxの差し手が示されました。${line}`);
       const { value: newMove } = IF(sasite.before === '打', {
         t: (): ShogiMove => ({ uchi: true, after, koma: sasite.koma, sente, }),
-        f: (): ShogiMove => ({ uchi: false, before: sasite.before as ShogiMasuSD, after, nari: sasite.nari, sente }),
+        f: (): ShogiMove => ({ uchi: false, before: sasite.before as ShogiMasuSD, after, nari: sasite.nari, koma: sasite.koma, narikoma: sasite.narikoma, sente }),
       });
       if (currentNode) {
         currentNode = currentNode.addChild({ move: newMove, comment: '' });

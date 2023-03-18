@@ -10,6 +10,8 @@ export type ShogiMove =
     before: ShogiMasuSD,
     after: ShogiMasuSD,
     nari: boolean,
+    koma: ShogiKoma,
+    narikoma: boolean,
     sente: boolean,
   } |
   {
