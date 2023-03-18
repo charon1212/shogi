@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/charon1212/shogi#readme",
   "dependencies": {
-    "util-charon1212": "^1.19.1"
+    "util-charon1212": "^1.19.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
