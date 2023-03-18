@@ -115,7 +115,7 @@ const parseSasite = (source: string): ParseSasiteResult | undefined => {
   const { value: before } = IF(source.startsWith('打'), {
     t: () => '打' as const,
     f: () => {
-      const input = formatInput(source, '(%)%');
+      const input = formatInput(source, '(%)');
       if (!input || !input[0]) return undefined;
       const s = +input[0][0];
       const d = +input[0][1];
