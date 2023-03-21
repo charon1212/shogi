@@ -11,8 +11,7 @@ import { ShogiBoard_judgeMovable } from "./__judgeMovable";
  * 盤面には、盤面情報・持ち駒・手番が含まれる。
  */
 export class ShogiBoard {
-  private sente_: boolean;
-  get sente() { return this.sente_; }
+  public sente: boolean;
   private mochigomaSet_: MochigomaSet;
   get mochigomaSet() { return this.mochigomaSet_; }
   private table_: ShogiTable;
@@ -20,11 +19,11 @@ export class ShogiBoard {
 
   constructor(board?: ShogiBoard) {
     if (board) {
-      this.sente_ = board.sente_;
+      this.sente = board.sente;
       this.mochigomaSet_ = board.mochigomaSet_;
       this.table_ = board.table_;
     } else {
-      this.sente_ = true;
+      this.sente = true;
       this.mochigomaSet_ = { sente: createMochigomaTemplateEmpty(), gote: createMochigomaTemplateEmpty(), };
       this.table_ = createShogiTableTemplateInit();
     }
@@ -70,7 +69,7 @@ export class ShogiBoard {
       this.setCell(before, null); // 移動元の削除
       if (nari) this.getCell(after)!.nari = true; // 成りの操作
     }
-    this.sente_ = !move.sente; // 先後入れ替え
+    this.sente = !move.sente; // 先後入れ替え
     return this;
   }
 
