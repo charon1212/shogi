@@ -12,26 +12,24 @@ import { ShogiBoard_judgeMovable } from "./__judgeMovable";
  */
 export class ShogiBoard {
   public sente: boolean;
-  private mochigomaSet_: MochigomaSet;
-  get mochigomaSet() { return this.mochigomaSet_; }
-  private table_: ShogiTable;
-  get table() { return this.table_; }
+  public mochigomaSet: MochigomaSet;
+  public table: ShogiTable;
 
   constructor(board?: ShogiBoard) {
     if (board) {
       this.sente = board.sente;
-      this.mochigomaSet_ = board.mochigomaSet_;
-      this.table_ = board.table_;
+      this.mochigomaSet = board.mochigomaSet;
+      this.table = board.table;
     } else {
       this.sente = true;
-      this.mochigomaSet_ = { sente: createMochigomaTemplateEmpty(), gote: createMochigomaTemplateEmpty(), };
-      this.table_ = createShogiTableTemplateInit();
+      this.mochigomaSet = { sente: createMochigomaTemplateEmpty(), gote: createMochigomaTemplateEmpty(), };
+      this.table = createShogiTableTemplateInit();
     }
   }
   /** オブジェクトコピーを生成する。 */
   shallowCopy() { return new ShogiBoard(this); }
   /** 持ち駒一覧を取得する。 */
-  getMochigoma(sente: boolean) { return sente ? this.mochigomaSet_.sente : this.mochigomaSet_.gote; }
+  getMochigoma(sente: boolean) { return sente ? this.mochigomaSet.sente : this.mochigomaSet.gote; }
   /**
    * 持ち駒の数を増減する。
    * @param sente 先手はtrue、後手はfalse。
@@ -39,15 +37,15 @@ export class ShogiBoard {
    * @param delta 増減する値。増加させる場合はプラスの値を指定する。
    */
   addMochigoma(sente: boolean, koma: ShogiKoma, delta: number) {
-    if (sente) this.mochigomaSet_.sente[koma] += delta;
-    else this.mochigomaSet_.gote[koma] += delta;
+    if (sente) this.mochigomaSet.sente[koma] += delta;
+    else this.mochigomaSet.gote[koma] += delta;
     return this;
   }
   /** 特定のマスのセル値を取得する。 */
-  getCell(masu: ShogiMasuSD) { return this.table_[masu.s - 1][masu.d - 1]; }
+  getCell(masu: ShogiMasuSD) { return this.table[masu.s - 1][masu.d - 1]; }
   /** 特定のマスのセル値を設定する。 */
   setCell(masu: ShogiMasuSD, cell: ShogiCell) {
-    this.table_[masu.s - 1][masu.d - 1] = cell;
+    this.table[masu.s - 1][masu.d - 1] = cell;
     return this;
   }
 
