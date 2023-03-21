@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/charon1212/shogi#readme",
   "dependencies": {
-    "@charon1212/shogi-domain": "^1.0.0",
+    "@charon1212/my-lib-react": "^1.11.1",
+    "@charon1212/shogi-domain": "^1.0.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
