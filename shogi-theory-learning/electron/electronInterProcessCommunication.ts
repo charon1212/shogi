@@ -14,6 +14,8 @@ export type MyAPI = {
   callSample: (sample: Sample) => void,
   writeFile: (filePath: string, content: string) => void,
   readFile: (filePath: string) => Buffer,
+  setStore: (key: string, value: any) => void,
+  getStore: (key: string) => any,
 };
 
 /** Renderer API (Promise) */

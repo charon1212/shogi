@@ -6,5 +6,7 @@ const myAPI: { [key in keyof MyAPI]: (...args: any) => Promise<any> } = {
   callSample: createInvoke('callSample'),
   writeFile: createInvoke('writeFile'),
   readFile: createInvoke('readFile'),
+  setStore: createInvoke('setStore'),
+  getStore: createInvoke('getStore'),
 };
 contextBridge.exposeInMainWorld('myAPI', myAPI);
