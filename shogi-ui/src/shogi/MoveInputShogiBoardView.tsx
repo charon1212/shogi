@@ -19,13 +19,14 @@ export const MoveInputShogiBoardView = (props: Props) => {
       onClickBoard={({ select, clickMasu, selectMasu, selectMochigoma, clearSelection }) => {
         const clickCell = shogiBoard.getCell(clickMasu);
         if (selectMasu) {
-          if (!clickCell) return; // エラーケース
+          const selectCell = shogiBoard.getCell(selectMasu);
+          if (!selectCell) throw new Error('選択マスに駒がない'); // エラーケース
           const moveNarazu: ShogiMove = {
             uchi: false,
             before: selectMasu,
             after: clickMasu,
-            koma: clickCell.koma,
-            narikoma: clickCell.nari,
+            koma: selectCell.koma,
+            narikoma: selectCell.nari,
             nari: false,
             sente: shogiBoard.sente,
           };
@@ -33,8 +34,8 @@ export const MoveInputShogiBoardView = (props: Props) => {
             uchi: false,
             before: selectMasu,
             after: clickMasu,
-            koma: clickCell.koma,
-            narikoma: clickCell.nari,
+            koma: selectCell.koma,
+            narikoma: selectCell.nari,
             nari: true,
             sente: shogiBoard.sente,
           };
