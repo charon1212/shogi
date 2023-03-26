@@ -1,6 +1,6 @@
 {
   "name": "@charon1212/shogi-ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/charon1212/shogi#readme",
   "dependencies": {
     "@charon1212/my-lib-react": "^1.11.1",
-    "@charon1212/shogi-domain": "^1.0.2",
+    "@charon1212/shogi-domain": "^1.0.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
