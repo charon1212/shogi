@@ -35,6 +35,8 @@ export const ShogiBoardView = (props: Props) => {
     return colorBoard?.find((c) => c.masu.s === s && c.masu.d === d)?.color ?? '';
   };
 
+  const getMasuIJ = (masu: ShogiMasuIJ): ShogiMasuIJ => (reverse ? { i: 8 - masu.i, j: 8 - masu.j } : masu);
+
   const mochigoma = (sente: boolean) => (
     <MochigomaView
       title={sente ? '先手' : '後手'}
@@ -57,9 +59,9 @@ export const ShogiBoardView = (props: Props) => {
                 <ShogiCellView
                   cell={w}
                   rotate={w?.sente === reverse} // reverseがtrueなら、後手番目線なので、先手の駒を反転する。vice versa
-                  bgColor={getColor({ i, j })}
-                  onClick={() => onClickBoard?.(convertMasuIJToSD({ i, j }))}
-                  onRightClick={() => onRightClickBoard?.(convertMasuIJToSD({ i, j }))}
+                  bgColor={getColor(getMasuIJ({ i, j }))}
+                  onClick={() => onClickBoard?.(convertMasuIJToSD(getMasuIJ({ i, j })))}
+                  onRightClick={() => onRightClickBoard?.(convertMasuIJToSD(getMasuIJ({ i, j })))}
                 />
               ))}
             </div>
