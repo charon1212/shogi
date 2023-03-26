@@ -29,7 +29,7 @@ export const ShogiBoard_judgeMovable = (shogiBoard: ShogiBoard, move: ShogiMove)
       if (beforeCell.nari) return '成り駒の再度成り';
       if (beforeCell.koma === 'g' || beforeCell.koma === 'k') return '成れない駒の成り';
       if (sente && before.d > 3 && after.d > 3) return '成れない移動の成り';
-      if (!sente && before.d < 3 && after.d < 3) return '成れない移動の成り';
+      if (!sente && before.d < 7 && after.d < 7) return '成れない移動の成り';
     } else { // 成らずの場合
       if (!canMoreMove(sente, after.d, beforeCell.koma, beforeCell.nari)) return 'これ以上進めないところへの移動';
     }
