@@ -17,6 +17,7 @@
     "@types/node": "^16.18.20",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
+    "iconv-lite": "^0.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -54,6 +55,7 @@
   "devDependencies": {
     "electron": "^23.2.0",
     "electron-builder": "^23.6.0",
+    "electron-log": "^4.4.8",
     "electron-store": "^8.1.0"
   },
   "main": "build/electron/electron.js",

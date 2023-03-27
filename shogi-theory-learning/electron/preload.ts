@@ -8,5 +8,6 @@ const myAPI: { [key in keyof MyAPI]: (...args: any) => Promise<any> } = {
   readFile: createInvoke('readFile'),
   setStore: createInvoke('setStore'),
   getStore: createInvoke('getStore'),
+  readSjisBufferToString: createInvoke('readSjisBufferToString'),
 };
 contextBridge.exposeInMainWorld('myAPI', myAPI);
