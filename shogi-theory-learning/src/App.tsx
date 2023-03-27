@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { ConfigurationContextProvider, useConfigurationContext } from './context/ConfigurationContext';
+import { TopPage } from './pages/TopPage/TopPage';
 
 export const App = () => {
   return (
@@ -19,5 +20,11 @@ const App2 = () => {
     });
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <TopPage />
+      </div>
+    </>
+  );
 };
