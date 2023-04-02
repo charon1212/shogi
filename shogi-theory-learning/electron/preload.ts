@@ -9,5 +9,7 @@ const myAPI: { [key in keyof MyAPI]: (...args: any) => Promise<any> } = {
   setStore: createInvoke('setStore'),
   getStore: createInvoke('getStore'),
   readSjisBufferToString: createInvoke('readSjisBufferToString'),
+  showSubShogiBoard: createInvoke('showSubShogiBoard'),
+  getWindowContext: createInvoke('getWindowContext'),
 };
 contextBridge.exposeInMainWorld('myAPI', myAPI);

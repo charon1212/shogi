@@ -6,8 +6,14 @@
  * そのため、他の型定義をインポートしないようにするか、両プロセスの配置場所から見て同じ相対パスに配置すること。（または、共通の置き場所に配置すること）
  */
 
+import { IpcMainInvokeEvent } from "electron";
+import { ShogiBoard, ShogiMove, } from '@charon1212/shogi-domain';
+
 /** ★DomainType(PJごとに要編集。共有が必要な型定義を記述。) */
 export type Sample = { name: string, };
+type WindowContextMain = { type: 'main' };
+type WindowContextSubShogiBoard = { type: 'sub-shogi-board', moveList: ShogiMove[] };
+export type WindowContext = WindowContextMain | WindowContextSubShogiBoard;
 
 /** ★API (PJごとに要編集。関数をMyAPIに追記) */
 export type MyAPI = {
@@ -17,11 +23,14 @@ export type MyAPI = {
   readSjisBufferToString: (str: Buffer) => string,
   setStore: (key: string, value: any) => void,
   getStore: (key: string) => any,
+  showSubShogiBoard: (moveList: ShogiMove[]) => void,
+  getWindowContext: () => WindowContext | undefined
 };
 
 /** Renderer API (Promise) */
 type WrapPromise<T extends (...args: any[]) => any> = ReturnType<T> extends PromiseLike<any> ? (...args: Parameters<T>) => ReturnType<T> : (...args: Parameters<T>) => Promise<ReturnType<T>>;
 export type MyAPIPromise = { [key in keyof MyAPI]: WrapPromise<MyAPI[key]> };
+export type MyAPIMainHandler = { [key in keyof MyAPI]: (event: IpcMainInvokeEvent) => MyAPI[key] };
 
 /**
  * ★Main

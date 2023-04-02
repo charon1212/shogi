@@ -1,11 +1,13 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import * as url from "url";
+import { WindowContext } from "./electronInterProcessCommunication";
 import { subscribeIpcMainHandler } from "./subscribeIpcMainHandler";
+import { setWindowContext } from "./windowContext";
 
 // Electronアプリの起動処理。
 // Windowを作成して、appUrlで指定するコンテンツを表示する。
-const createWindow = () => {
+export const createWindow = (context: WindowContext = { type: 'main' }) => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -14,12 +16,14 @@ const createWindow = () => {
     },
   });
 
+  setWindowContext(win.id, context);
+
   // 開発環境ではlocalhost:3000を、それ以外はルートのindex.htmlを描画する。
   if (app.isPackaged) { // 本番ビルド
-    const appUrl = url.format({ pathname: path.join(__dirname, "../index.html"), protocol: "file:", slashes: true, });
+    const appUrl = url.format({ pathname: path.join(__dirname, `../index.html`), protocol: "file:", slashes: true, });
     win.loadURL(appUrl);
   } else { // 開発ビルド
-    win.loadURL('http://localhost:3000');
+    win.loadURL(`http://localhost:3000`);
   }
 };
 
