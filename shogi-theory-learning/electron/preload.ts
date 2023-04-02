@@ -6,6 +6,7 @@ const myAPI: { [key in keyof MyAPI]: (...args: any) => Promise<any> } = {
   callSample: createInvoke('callSample'),
   writeFile: createInvoke('writeFile'),
   readFile: createInvoke('readFile'),
+  getFileList: createInvoke('getFileList'),
   setStore: createInvoke('setStore'),
   getStore: createInvoke('getStore'),
   readSjisBufferToString: createInvoke('readSjisBufferToString'),

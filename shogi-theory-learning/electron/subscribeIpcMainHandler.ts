@@ -14,6 +14,7 @@ const subscriptions: MyAPIMainHandler = {
   callSample: () => (sample) => console.log(`sample! ${sample.name}`),
   writeFile: () => (filePath, content) => fs.writeFileSync(filePath, content),
   readFile: () => (filePath) => fs.readFileSync(filePath),
+  getFileList: () => (dirPath) => fs.readdirSync(dirPath),
   setStore: () => (key, value) => store.set(key, value),
   getStore: () => (key) => store.get(key),
   readSjisBufferToString: () => (buffer) => decode(buffer, 'sjis'),
