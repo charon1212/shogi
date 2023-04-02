@@ -7,16 +7,14 @@ import { setWindowContext } from "./windowContext";
 
 // Electronアプリの起動処理。
 // Windowを作成して、appUrlで指定するコンテンツを表示する。
-export const createWindow = (context: WindowContext = { type: 'main' }) => {
+export const createWindow = (context: WindowContext = { type: 'main' }, width = 800, height = 600) => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width,
+    height,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-
-  setWindowContext(win.id, context);
 
   // 開発環境ではlocalhost:3000を、それ以外はルートのindex.htmlを描画する。
   if (app.isPackaged) { // 本番ビルド
@@ -25,6 +23,8 @@ export const createWindow = (context: WindowContext = { type: 'main' }) => {
   } else { // 開発ビルド
     win.loadURL(`http://localhost:3000`);
   }
+
+  setWindowContext(win.id, context);
 };
 
 // ウィンドウがすべて閉じられたら、アプリを終了する。

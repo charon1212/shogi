@@ -17,7 +17,7 @@ const subscriptions: MyAPIMainHandler = {
   setStore: () => (key, value) => store.set(key, value),
   getStore: () => (key) => store.get(key),
   readSjisBufferToString: () => (buffer) => decode(buffer, 'sjis'),
-  showSubShogiBoard: () => (moveList) => createWindow({ type: 'sub-shogi-board', moveList }),
+  showSubShogiBoard: () => (moveList) => createWindow({ type: 'sub-shogi-board', moveList }, 600, 500),
   getWindowContext: (event) => () => {
     log.debug({ event });
     return getWindowContext(event.sender.id);
