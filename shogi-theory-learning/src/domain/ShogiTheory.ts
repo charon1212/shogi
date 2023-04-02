@@ -1,6 +1,6 @@
 import { ShogiKifu, ShogiKifuMove, ShogiMove } from "@charon1212/shogi-domain";
 import { ShogiBoard } from "@charon1212/shogi-domain/build/domain/ShogiBoard";
-import { formatInput, IF, MyTree } from "util-charon1212";
+import { formatInput, MyTree } from "util-charon1212";
 
 export type ShogiTheoryNode = { move: ShogiMove, comment: string, boardCount: string, check: boolean, };
 export type ShogiTheory = {
@@ -42,5 +42,20 @@ export const convertShogiTheoryToShogiKifu = (theory: ShogiTheory): ShogiKifu =>
     initialBoard: theory.initBoard,
     firstComment: theory.summary,
     kifu: newTree.root === undefined ? [] : [newTree],
+  };
+};
+
+type ShogiTheoryJson = { title: string, summary: string, theory: string };
+export const saveShogiTheory = (shogiTheory: ShogiTheory) => {
+  const { title, summary, theory } = shogiTheory;
+  const json: ShogiTheoryJson = { title, summary, theory: theory.serialize((node) => JSON.stringify(node)) };
+  return JSON.stringify(json);
+};
+export const loadShogiTheory = (str: string): ShogiTheory => {
+  const json: ShogiTheoryJson = JSON.parse(str);
+  return {
+    title: json.title,
+    summary: json.summary,
+    theory: MyTree.deserialize<ShogiTheoryNode>(json.theory, (str) => JSON.parse(str)),
   };
 };

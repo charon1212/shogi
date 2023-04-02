@@ -1,7 +1,8 @@
 import { Typography, Button } from '@mui/material';
 import { useState } from 'react';
+import { useConfigurationContext } from '../../context/ConfigurationContext';
 import { useConfigDialog } from '../../dialogs/useConfigDialog';
-import { ShogiTheory } from '../../domain/ShogiTheory';
+import { saveShogiTheory, ShogiTheory } from '../../domain/ShogiTheory';
 import { EditTheory } from './EditTheory';
 import { Menu } from './Menu';
 
@@ -11,6 +12,13 @@ const menuSize = '250px';
 export const TopPage = () => {
   const [configDialog, openConfigDialog] = useConfigDialog();
   const [selectedTheory, setSelectedTheory] = useState<ShogiTheory | undefined>();
+  const [config] = useConfigurationContext();
+
+  const saveTheory = (theory: ShogiTheory) => {
+    if (!config?.baseDirPath) return alert('基準ディレクトリパスを設定してください。');
+    if (!theory.title) return alert('タイトルを設定してください。');
+    window.myAPI.writeFile(`${config?.baseDirPath}/${theory.title}.stl`, saveShogiTheory(theory));
+  };
 
   return (
     <>
@@ -27,7 +35,7 @@ export const TopPage = () => {
           <Menu selectedTheory={selectedTheory} setSelectedTheory={setSelectedTheory} />
         </div>
         <div style={{ height: '100%', width: `calc(100vw - ${menuSize})`, margin: '0', padding: '0' }}>
-          {selectedTheory ? <EditTheory shogiTheory={selectedTheory} /> : ''}
+          {selectedTheory ? <EditTheory shogiTheory={selectedTheory} saveTheory={saveTheory} /> : ''}
         </div>
       </div>
       {configDialog}
