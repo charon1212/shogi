@@ -2,6 +2,7 @@ import { ShogiTheoryNode } from '../../domain/ShogiTheory';
 import { MyTree, MyNode } from 'util-charon1212';
 import { useState } from 'react';
 import { getMoveText } from '../../domain/getMoveText';
+import { getMoveBoardCountText } from '../../domain/getMoveBoardCountText';
 
 type Props = {
   tree: MyTree<ShogiTheoryNode>;
@@ -13,8 +14,6 @@ export const ViewBranch = (props: Props) => {
   const [fontSize, setFontSize] = useState(10);
 
   const list = tree.root ? f(tree.root) : [];
-  const getMoveBoardCountText = (boardCount: string, check: boolean) =>
-    boardCount || check ? `[${check ? '★' : ''}${boardCount ? `${boardCount}図` : ''}]` : '';
 
   const list2 = list.map((v) => ({ ...v, childOfCurrent: false }));
   let a: typeof list[number] | undefined = undefined;

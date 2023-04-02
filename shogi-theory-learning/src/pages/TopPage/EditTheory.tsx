@@ -8,6 +8,7 @@ import { MyNode } from 'util-charon1212';
 import { ShogiMove } from '@charon1212/shogi-domain/build/domain/ShogiMove';
 import { ViewBranch } from './ViewBranch';
 import { getMoveText } from '../../domain/getMoveText';
+import { getMoveBoardCountText } from '../../domain/getMoveBoardCountText';
 
 const equalMove = (m1: ShogiMove, m2: ShogiMove): boolean => {
   if (m1.sente !== m2.sente) return false;
@@ -80,6 +81,8 @@ export const EditTheory = (props: Props) => {
     <div>
       <Link style={{ margin: '5px' }} href='#' onClick={() => setCurrentNode(node)}>
         {getMoveText(node.value.move, node.parent?.value.move)}
+        {node.value.comment ? '*' : ''}
+        {getMoveBoardCountText(node.value.boardCount, node.value.check)}
       </Link>
     </div>
   );
