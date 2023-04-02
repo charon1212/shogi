@@ -13,8 +13,10 @@ export const ViewBranch = (props: Props) => {
   const [fontSize, setFontSize] = useState(10);
 
   const list = tree.root ? f(tree.root) : [];
-  const getMoveText = (move: ShogiMove) =>
-    `${move.sente ? '▲' : '△'}${getMasuText(move.after)}${getKomaName1Char(move.koma, move.uchi ? false : move.narikoma)}`;
+  const getMoveText = (move: ShogiMove, beforeMove: ShogiMove | undefined) =>
+    (move.sente ? '▲' : '△') +
+    (move.after.d === beforeMove?.after.d && move.after.s === beforeMove?.after.s ? '同' : getMasuText(move.after)) +
+    getKomaName1Char(move.koma, move.uchi ? false : move.narikoma);
   const getMoveBoardCountText = (boardCount: string, check: boolean) =>
     boardCount || check ? `[${check ? '★' : ''}${boardCount ? `${boardCount}図` : ''}]` : '';
 
@@ -68,7 +70,7 @@ export const ViewBranch = (props: Props) => {
             {nodes.map((node) => (
               <>
                 <a href='#' onClick={() => onClickNode?.(node)} style={{ margin: '0 2px 0', backgroundColor: node === current ? 'lightcoral' : '' }}>
-                  {getMoveText(node.value.move)}
+                  {getMoveText(node.value.move, node.parent?.value.move)}
                   {node.value.comment ? '*' : ''}
                   {getMoveBoardCountText(node.value.boardCount, node.value.check)}
                 </a>
