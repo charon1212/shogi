@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { ShogiTheory, ShogiTheoryNode } from '../../domain/ShogiTheory';
@@ -35,6 +35,14 @@ export const EditTheory = (props: Props) => {
     if (currentNode) currentNode.value.comment = comment;
     setTheory(theory.clone());
   };
+  const updateBoardCount = (boardCount: string) => {
+    if (currentNode) currentNode.value.boardCount = boardCount;
+    setTheory(theory.clone());
+  };
+  const updateCheck = (check: boolean) => {
+    if (currentNode) currentNode.value.check = check;
+    setTheory(theory.clone());
+  };
 
   const board = (currentNode?.getPath() ?? []).reduce((p, c) => p.adaptShogiMove(c.value.move), new ShogiBoard());
   const onInputMove = (move: ShogiMove) => {
@@ -63,6 +71,10 @@ export const EditTheory = (props: Props) => {
     }
   };
 
+  const showSubShogiBoard = () => {
+    window.myAPI.showSubShogiBoard(currentNode?.getPath().map((v) => v.value.move) ?? []);
+  };
+
   return (
     <>
       <div style={{ display: 'flex', width: '100%', height: '100%' }}>
@@ -78,10 +90,40 @@ export const EditTheory = (props: Props) => {
               <Button variant='contained' onClick={deleteMove}>
                 差し手削除
               </Button>
+              <Button variant='contained' onClick={showSubShogiBoard}>
+                テスト（継ぎ盤）
+              </Button>
             </div>
           </div>
           <div style={{ backgroundColor: 'lightcyan', padding: '10px' }}>
-            <TextField value={currentNode?.value.comment ?? ''} onChange={(e) => updateSetMoveComment(e.target.value)} multiline fullWidth rows={5} />
+            <div style={{ display: 'flex', alignItems: 'center', margin: '5px' }}>
+              <TextField
+                value={currentNode?.value.boardCount ?? ''}
+                variant='standard'
+                onChange={(e) => updateBoardCount(e.target.value)}
+                disabled={currentNode === undefined}
+                inputProps={{ style: { textAlign: 'right' } }}
+              />
+              図
+              <div style={{ margin: '0 10px 0' }}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox checked={currentNode?.value.check ?? false} onChange={(e) => updateCheck(e.target.checked)} />}
+                    label='Point'
+                  />
+                </FormGroup>
+              </div>
+            </div>
+            <div>
+              <TextField
+                value={currentNode?.value.comment ?? '※初期局面のコメントは設定できません'}
+                onChange={(e) => updateSetMoveComment(e.target.value)}
+                disabled={currentNode === undefined}
+                multiline
+                fullWidth
+                rows={5}
+              />
+            </div>
           </div>
         </div>
         <div style={{ maxHeight: '100%', display: 'flex', flexDirection: 'column' }}>
