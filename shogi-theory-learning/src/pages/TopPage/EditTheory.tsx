@@ -1,4 +1,4 @@
-import { Button, TextField, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Button, TextField, Checkbox, FormGroup, FormControlLabel, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { ShogiTheory, ShogiTheoryNode } from '../../domain/ShogiTheory';
@@ -7,6 +7,7 @@ import { ShogiBoard } from '@charon1212/shogi-domain';
 import { MyNode } from 'util-charon1212';
 import { ShogiMove } from '@charon1212/shogi-domain/build/domain/ShogiMove';
 import { ViewBranch } from './ViewBranch';
+import { getMoveText } from '../../domain/getMoveText';
 
 const equalMove = (m1: ShogiMove, m2: ShogiMove): boolean => {
   if (m1.sente !== m2.sente) return false;
@@ -75,6 +76,14 @@ export const EditTheory = (props: Props) => {
     window.myAPI.showSubShogiBoard(currentNode?.getPath().map((v) => v.value.move) ?? []);
   };
 
+  const createMoveButton = (node: MyNode<ShogiTheoryNode>) => (
+    <div>
+      <Link style={{ margin: '5px' }} href='#' onClick={() => setCurrentNode(node)}>
+        {getMoveText(node.value.move, node.parent?.value.move)}
+      </Link>
+    </div>
+  );
+
   return (
     <>
       <div style={{ display: 'flex', width: '100%', height: '100%' }}>
@@ -87,12 +96,22 @@ export const EditTheory = (props: Props) => {
           <div style={{ display: 'flex' }}>
             <MoveInputShogiBoardView shogiBoard={board} onInputMove={onInputMove} />
             <div style={{ backgroundColor: 'lightcyan', width: '100%', padding: '10px' }}>
-              <Button variant='contained' onClick={deleteMove}>
-                差し手削除
-              </Button>
-              <Button variant='contained' onClick={showSubShogiBoard}>
-                テスト（継ぎ盤）
-              </Button>
+              <div>
+                <Button style={{ margin: '5px' }} variant='contained' onClick={deleteMove}>
+                  差し手削除
+                </Button>
+                <Button style={{ margin: '5px' }} variant='contained' onClick={showSubShogiBoard}>
+                  継ぎ盤
+                </Button>
+              </div>
+              <div>
+                1手戻る
+                {currentNode?.parent !== undefined ? createMoveButton(currentNode?.parent) : ''}
+              </div>
+              <div>
+                1手進む
+                <div>{currentNode?.children.map((child) => createMoveButton(child)) ?? ''}</div>
+              </div>
             </div>
           </div>
           <div style={{ backgroundColor: 'lightcyan', padding: '10px' }}>

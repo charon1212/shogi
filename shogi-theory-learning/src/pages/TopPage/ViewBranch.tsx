@@ -1,7 +1,7 @@
 import { ShogiTheoryNode } from '../../domain/ShogiTheory';
 import { MyTree, MyNode } from 'util-charon1212';
-import { getMasuText, getKomaName1Char, ShogiMove } from '@charon1212/shogi-domain';
 import { useState } from 'react';
+import { getMoveText } from '../../domain/getMoveText';
 
 type Props = {
   tree: MyTree<ShogiTheoryNode>;
@@ -13,10 +13,6 @@ export const ViewBranch = (props: Props) => {
   const [fontSize, setFontSize] = useState(10);
 
   const list = tree.root ? f(tree.root) : [];
-  const getMoveText = (move: ShogiMove, beforeMove: ShogiMove | undefined) =>
-    (move.sente ? '▲' : '△') +
-    (move.after.d === beforeMove?.after.d && move.after.s === beforeMove?.after.s ? '同' : getMasuText(move.after)) +
-    getKomaName1Char(move.koma, move.uchi ? false : move.narikoma);
   const getMoveBoardCountText = (boardCount: string, check: boolean) =>
     boardCount || check ? `[${check ? '★' : ''}${boardCount ? `${boardCount}図` : ''}]` : '';
 
