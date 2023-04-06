@@ -9,7 +9,6 @@ const myAPI: { [key in keyof MyAPI]: (...args: any) => Promise<any> } = {
   getFileList: createInvoke('getFileList'),
   setStore: createInvoke('setStore'),
   getStore: createInvoke('getStore'),
-  readSjisBufferToString: createInvoke('readSjisBufferToString'),
   showSubShogiBoard: createInvoke('showSubShogiBoard'),
   getWindowContext: createInvoke('getWindowContext'),
 };

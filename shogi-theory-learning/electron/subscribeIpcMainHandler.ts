@@ -13,14 +13,17 @@ const store = new ElectronStore();
 const subscriptions: MyAPIMainHandler = {
   callSample: () => (sample) => console.log(`sample! ${sample.name}`),
   writeFile: () => (filePath, content) => fs.writeFileSync(filePath, content),
-  readFile: () => (filePath) => fs.readFileSync(filePath),
+  readFile: () => (filePath, option) => {
+    const buffer = fs.readFileSync(filePath);
+    if (option?.encoding === 'utf8') return decode(buffer, 'utf8');
+    if (option?.encoding === 'sjis') return decode(buffer, 'sjis');
+    return buffer.toString();
+  },
   getFileList: () => (dirPath) => fs.readdirSync(dirPath),
   setStore: () => (key, value) => store.set(key, value),
   getStore: () => (key) => store.get(key),
-  readSjisBufferToString: () => (buffer) => decode(buffer, 'sjis'),
   showSubShogiBoard: () => (moveList) => createWindow({ type: 'sub-shogi-board', moveList }, 600, 500),
   getWindowContext: (event) => () => {
-    log.debug({ event });
     return getWindowContext(event.sender.id);
   },
 };

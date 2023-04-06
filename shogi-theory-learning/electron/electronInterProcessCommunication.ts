@@ -7,21 +7,21 @@
  */
 
 import { IpcMainInvokeEvent } from "electron";
-import { ShogiBoard, ShogiMove, } from '@charon1212/shogi-domain';
+import { ShogiMove, } from '@charon1212/shogi-domain';
 
 /** ★DomainType(PJごとに要編集。共有が必要な型定義を記述。) */
 export type Sample = { name: string, };
 type WindowContextMain = { type: 'main' };
 type WindowContextSubShogiBoard = { type: 'sub-shogi-board', moveList: ShogiMove[] };
 export type WindowContext = WindowContextMain | WindowContextSubShogiBoard;
+export type EncodeChar = 'utf8' | 'sjis';
 
 /** ★API (PJごとに要編集。関数をMyAPIに追記) */
 export type MyAPI = {
   callSample: (sample: Sample) => void,
   writeFile: (filePath: string, content: string) => void,
-  readFile: (filePath: string) => Buffer,
+  readFile: (filePath: string, option?: { encoding?: EncodeChar }) => string,
   getFileList: (dirPath: string) => string[],
-  readSjisBufferToString: (str: Buffer) => string,
   setStore: (key: string, value: any) => void,
   getStore: (key: string) => any,
   showSubShogiBoard: (moveList: ShogiMove[]) => void,
