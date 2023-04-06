@@ -30,9 +30,8 @@ export const useKifFileImportDialog = (args: UseKifFileImportDialogArgs) => {
       .flatMap((v) => v.split('/'))
       .pop()!;
     window.myAPI
-      .readFile(filePath)
-      .then(async (buffer) => {
-        const fileStr = await window.myAPI.readSjisBufferToString(buffer);
+      .readFile(filePath, { encoding: 'sjis' })
+      .then((fileStr) => {
         const { shogiKifu } = readKifFile(fileStr);
         const theory = convertShogiKifuToShogiTheory(shogiKifu);
         theory.title = fileName;
