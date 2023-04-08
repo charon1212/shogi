@@ -22,7 +22,7 @@ const subscriptions: MyAPIMainHandler = {
   getFileList: () => (dirPath) => fs.readdirSync(dirPath),
   setStore: () => (key, value) => store.set(key, value),
   getStore: () => (key) => store.get(key),
-  showSubShogiBoard: () => (moveList) => createWindow({ type: 'sub-shogi-board', moveList }, 600, 500),
+  showSubShogiBoard: () => (moveList) => createWindow({ type: 'sub-shogi-board', moveList }, 700, 500, true),
   getWindowContext: (event) => () => {
     return getWindowContext(event.sender.id);
   },

@@ -45,6 +45,7 @@ export const EditTheory = (props: Props) => {
     if (currentNode) currentNode.value.check = check;
     setTheory(theory.clone());
   };
+  const lastMove = currentNode?.value.move;
 
   const board = (currentNode?.getPath() ?? []).reduce((p, c) => p.adaptShogiMove(c.value.move), new ShogiBoard());
   const onInputMove = (move: ShogiMove) => {
@@ -97,7 +98,18 @@ export const EditTheory = (props: Props) => {
             <Button onClick={() => saveTheory?.({ title, summary, theory })}>保存</Button>
           </div>
           <div style={{ display: 'flex' }}>
-            <MoveInputShogiBoardView shogiBoard={board} onInputMove={onInputMove} />
+            <div>
+              <Typography variant='h5' sx={{ margin: '5px 20px 5px' }}>
+                {currentNode
+                  ? `${currentNode.getPath().length}手目 - ${getMoveText(currentNode.value.move, currentNode.parent?.value.move)}`
+                  : `0手目 - 初期局面`}
+              </Typography>
+              <MoveInputShogiBoardView
+                shogiBoard={board}
+                onInputMove={onInputMove}
+                colorBoard={lastMove ? [{ masu: lastMove.after, color: 'lightcoral' }] : []}
+              />
+            </div>
             <div style={{ backgroundColor: 'lightcyan', width: '100%', padding: '10px' }}>
               <div>
                 <Button style={{ margin: '5px' }} variant='contained' onClick={deleteMove}>
@@ -117,7 +129,7 @@ export const EditTheory = (props: Props) => {
               </div>
             </div>
           </div>
-          <div style={{ backgroundColor: 'lightcyan', padding: '10px' }}>
+          <div style={{ backgroundColor: '', padding: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', margin: '5px' }}>
               <TextField
                 value={currentNode?.value.boardCount ?? ''}
