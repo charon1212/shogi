@@ -5,9 +5,14 @@ import { useScroll } from '@charon1212/my-lib-react';
 const createMoveTest = (move: ShogiMove) =>
   `${move.sente ? '▲' : '△'}${getMasuText(move.after)}${getKomaName1Char(move.koma, !move.uchi && move.narikoma)}`;
 
-export type MoveListViewProps = { moveList: ShogiMove[]; moveCount: number; setMoveCount: (moveCount: number) => unknown };
+export type MoveListViewProps = {
+  moveList: ShogiMove[];
+  moveCount: number;
+  setMoveCount: (moveCount: number) => unknown;
+  listDivStyle?: React.CSSProperties;
+};
 export const MoveListView = (props: MoveListViewProps) => {
-  const { moveList, moveCount, setMoveCount } = props;
+  const { moveList, moveCount, setMoveCount, listDivStyle } = props;
   const [refScroll, scrollTo] = useScroll();
 
   useEffect(() => {
@@ -23,7 +28,7 @@ export const MoveListView = (props: MoveListViewProps) => {
 
   return (
     <>
-      <div style={{ overflowY: 'auto' }}>
+      <div style={{ ...listDivStyle }}>
         <div {...createMoveDivProps(0)}>0 - 開始局面</div>
         {moveList.map((move, i) => (
           <div {...createMoveDivProps(i + 1)} key={i}>
