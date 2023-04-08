@@ -5,6 +5,7 @@ import { ShogiMove } from "./ShogiMove";
 import { createShogiTableTemplateInit, ShogiCell, ShogiTable } from "./ShogiTable";
 import { ShogiBoard_getKomaDominance } from "./__getKomaDominance";
 import { ShogiBoard_judgeMovable } from "./__judgeMovable";
+import { ShogiBoard_toSFEN } from "./__sfen";
 
 /**
  * 将棋の盤面を表現するクラス。
@@ -105,4 +106,13 @@ export class ShogiBoard {
    * @returns 移動出来ない場合、その理由を文字列で返却する。移動できる場合、空文字を返却する。
    */
   judgeMovable(move: ShogiMove) { return ShogiBoard_judgeMovable(this, move); }
+
+  /**
+   * 現局面のsfenを返却する。
+   *
+   * @returns SFEN(Shogi Forsyth-Edwards Notation)表記法による局面と指し手の表記
+   */
+  toSFEN() {
+    return ShogiBoard_toSFEN(this);
+  }
 }
