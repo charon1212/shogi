@@ -26,7 +26,7 @@ export const ShogiBoard_toSFEN = (shogiBoard: ShogiBoard) => {
 
   const mochigoma = [true, false].map((sente) => getAllShogiKoma().map((koma) => {
     const num = shogiBoard.getMochigoma(sente)[koma];
-    return num > 0 ? `${convert(sfenMap1[koma], sente)}${num === 1 ? '' : num}` : ``;
+    return num > 0 ? `${num === 1 ? '' : num}${convert(sfenMap1[koma], sente)}` : ``;
   }).join('')).join('');
   return `${board} ${shogiBoard.sente ? 'b' : 'w'} ${mochigoma || '-'} 1`;
 };
