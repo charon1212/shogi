@@ -8,8 +8,8 @@ import { ShogiMove } from "../../domain/ShogiMove";
  *
  * - {sente}はs,gのいずれかを指定。
  * - {koma}は移動または打つ駒の種類を指定する。
- * - {narikoma}は移動する駒が成り駒の場合は'!'を、そうでなければ' 'を指定する。打つ場合は常に' 'を指定する。
- * - {before}は"  "または2桁の数値を指定。打ちの場合は空白。
+ * - {narikoma}は移動する駒が成り駒の場合は'!'を、そうでなければ`" "`を指定する。打つ場合は常に`" "`を指定する。
+ * - {before}は`"  "`または2桁の数値を指定。打ちの場合は空白。
  * - {before}と{after}の間は固定値">"を設定。
  * - {after}は2桁の数値を指定。
  * - {nari}は、移動成の場合に'!'を指定する。
@@ -17,9 +17,9 @@ import { ShogiMove } from "../../domain/ShogiMove";
  * @example
  *
  * ```ts
- * createShogiMove('sn 77>76');
- * createShogiMove('sb 88>22!');
- * createShogiMove('gn   >76');
+ * createShogiMove('sn 77>76'); // ▲７六歩
+ * createShogiMove('sb 88>22!'); // ▲２二角成
+ * createShogiMove('gn   >76'); // △７六桂打
  * ```
  */
 export const createShogiMove = (text: string): ShogiMove => text.substring(3, 5) === '  ' ?

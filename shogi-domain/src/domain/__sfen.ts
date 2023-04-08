@@ -9,11 +9,12 @@ export const ShogiBoard_toSFEN = (shogiBoard: ShogiBoard) => {
   const board = arr9.map((d) => {
     let line = '';
     let noCell = 0;
-    for (let s = 1; s <= 9; s++) {
+    for (let s = 9; s >= 1; s--) {
       const c = shogiBoard.getCell({ s, d });
       if (c) {
         if (noCell) line += `${noCell}`;
         noCell = 0;
+        if (c.nari) line += '+';
         line += convert(sfenMap1[c.koma], c.sente);
       } else {
         noCell++;
@@ -26,8 +27,8 @@ export const ShogiBoard_toSFEN = (shogiBoard: ShogiBoard) => {
   const mochigoma = [true, false].map((sente) => getAllShogiKoma().map((koma) => {
     const num = shogiBoard.getMochigoma(sente)[koma];
     return num > 0 ? `${convert(sfenMap1[koma], sente)}${num === 1 ? '' : num}` : ``;
-  }).join(''));
-  return ` ${shogiBoard.sente ? 'b' : 'w'} ${mochigoma || '-'} 1`;
+  }).join('')).join('');
+  return `${board} ${shogiBoard.sente ? 'b' : 'w'} ${mochigoma || '-'} 1`;
 };
 
 const convert = (koma: string, sente: boolean) => sente ? koma.toUpperCase() : koma.toLowerCase();
