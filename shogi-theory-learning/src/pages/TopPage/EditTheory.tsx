@@ -26,13 +26,15 @@ export const EditTheory = (props: Props) => {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [theory, setTheory] = useState(shogiTheory.theory);
+  const [currentNode, setCurrentNode] = useState<MyNode<ShogiTheoryNode> | undefined>();
+
   useEffect(() => {
     setTitle(shogiTheory.title);
     setSummary(shogiTheory.summary);
     setTheory(shogiTheory.theory);
+    setCurrentNode(undefined);
   }, [shogiTheory]);
 
-  const [currentNode, setCurrentNode] = useState<MyNode<ShogiTheoryNode> | undefined>();
   const updateSetMoveComment = (comment: string) => {
     if (currentNode) currentNode.value.comment = comment;
     setTheory(theory.clone());
