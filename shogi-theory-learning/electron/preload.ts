@@ -11,5 +11,6 @@ const myAPI: { [key in keyof MyAPI]: (...args: any) => Promise<any> } = {
   getStore: createInvoke('getStore'),
   showSubShogiBoard: createInvoke('showSubShogiBoard'),
   getWindowContext: createInvoke('getWindowContext'),
+  clipboardWrite: createInvoke('clipboardWrite'),
 };
 contextBridge.exposeInMainWorld('myAPI', myAPI);

@@ -25,11 +25,20 @@ export const SubShogiBoard = () => {
     setMoveCount(moveCount + 1);
   };
 
+  const onClickSFENCopy = () => {
+    const sfen = board.toSFEN();
+    console.log({ sfen });
+    window.myAPI.clipboardWrite(sfen);
+  };
+
   return (
     <>
       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div>
-          <Button onClick={onReset}>リセット</Button>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button onClick={onReset}>リセット</Button>
+            <Button onClick={onClickSFENCopy}>SFENコピー</Button>
+          </div>
           <MoveInputShogiBoardView shogiBoard={board} colorBoard={colorBoard} onInputMove={onInputMove} />
         </div>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

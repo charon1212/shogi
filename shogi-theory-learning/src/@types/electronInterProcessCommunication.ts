@@ -25,7 +25,8 @@ export type MyAPI = {
   setStore: (key: string, value: any) => void,
   getStore: (key: string) => any,
   showSubShogiBoard: (moveList: ShogiMove[]) => void,
-  getWindowContext: () => WindowContext | undefined
+  getWindowContext: () => WindowContext | undefined,
+  clipboardWrite: (text: any) => void,
 };
 
 /** Renderer API (Promise) */

@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron';
+import { ipcMain, clipboard } from 'electron';
 import { MyAPIMainHandler } from './electronInterProcessCommunication'
 import * as fs from 'fs';
 import * as log from 'electron-log';
@@ -25,6 +25,9 @@ const subscriptions: MyAPIMainHandler = {
   showSubShogiBoard: () => (moveList) => createWindow({ type: 'sub-shogi-board', moveList }, 700, 500, true),
   getWindowContext: (event) => () => {
     return getWindowContext(event.sender.id);
+  },
+  clipboardWrite: () => (text) => {
+    clipboard.write({ text });
   },
 };
 

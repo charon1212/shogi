@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@charon1212/my-lib-react": "^1.11.1",
-    "@charon1212/shogi-domain": "^1.0.2",
+    "@charon1212/shogi-domain": "^1.0.6",
     "@charon1212/shogi-ui": "^1.0.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",

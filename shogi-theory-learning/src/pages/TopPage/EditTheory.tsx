@@ -88,6 +88,12 @@ export const EditTheory = (props: Props) => {
     </div>
   );
 
+  const onClickSFENCopy = () => {
+    const sfen = board.toSFEN();
+    console.log({ sfen });
+    window.myAPI.clipboardWrite(sfen);
+  };
+
   return (
     <>
       <div style={{ display: 'flex', width: '100%', height: '100%' }}>
@@ -99,11 +105,14 @@ export const EditTheory = (props: Props) => {
           </div>
           <div style={{ display: 'flex' }}>
             <div>
-              <Typography variant='h5' sx={{ margin: '5px 20px 5px' }}>
-                {currentNode
-                  ? `${currentNode.getPath().length}手目 - ${getMoveText(currentNode.value.move, currentNode.parent?.value.move)}`
-                  : `0手目 - 初期局面`}
-              </Typography>
+              <div style={{ display: 'flex', padding: '5px 30px 5px', justifyContent: 'space-between' }}>
+                <Typography variant='h5'>
+                  {currentNode
+                    ? `${currentNode.getPath().length}手目 - ${getMoveText(currentNode.value.move, currentNode.parent?.value.move)}`
+                    : `0手目 - 初期局面`}
+                </Typography>
+                <Button onClick={onClickSFENCopy}>SFENコピー</Button>
+              </div>
               <MoveInputShogiBoardView
                 shogiBoard={board}
                 onInputMove={onInputMove}
